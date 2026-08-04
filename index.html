@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mumy — Cookies, Postres & Café · Metroplaza</title>
+<meta name="description" content="Galletas, alfajores y postres artesanales en Metroplaza. Personalizados para tus celebraciones. Pedidos por WhatsApp y Uber Eats.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF7F2;
+    --cream-deep:#F1EBE1;
+    --sage:#2F4A3C;
+    --sage-deep:#1B3327;
+    --charcoal:#231F1A;
+    --blush:#F3C9C6;
+    --blush-deep:#E7ADA8;
+    --white:#FFFFFF;
+    --tan:#C39A63;
+    --line: rgba(35,31,26,0.12);
+    --max: 1140px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+  body{
+    background:var(--cream);
+    color:var(--charcoal);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces',serif; letter-spacing:-0.01em; }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--sage-deep); font-weight:600; display:inline-block;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,246,238,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; padding-bottom:18px;
+  }
+  .logo{ font-family:'Fraunces',serif; font-weight:600; font-size:26px; }
+  .logo-img{ height:84px; width:auto; display:block; }
+  nav{ display:flex; gap:32px; font-size:14px; font-weight:500; }
+  nav a{ position:relative; }
+  nav a::after{
+    content:""; position:absolute; left:0; bottom:-4px; height:1px; width:0;
+    background:var(--sage-deep); transition:width .3s ease;
+  }
+  nav a:hover::after{ width:100%; }
+  .btn{
+    display:inline-block; padding:12px 26px; border-radius:100px;
+    font-size:14px; font-weight:600; white-space:nowrap;
+  }
+  .btn-solid{ background:var(--sage-deep); color:var(--white); }
+  .btn-solid:hover{ background:var(--charcoal); }
+  .btn-outline{ border:1px solid var(--charcoal); color:var(--charcoal); }
+  .btn-outline:hover{ background:var(--charcoal); color:var(--white); }
+  @media (max-width:860px){ nav{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:64px 0 90px; position:relative; overflow:hidden; }
+  .hero::before, .hero::after{
+    content:""; position:absolute; border-radius:50%; pointer-events:none; z-index:0;
+    filter:blur(60px);
+  }
+  .hero::before{
+    top:-140px; right:-120px; width:480px; height:480px;
+    background:radial-gradient(circle, rgba(243,201,198,0.45), rgba(243,201,198,0) 72%);
+  }
+  .hero::after{
+    bottom:-160px; left:-140px; width:420px; height:420px;
+    background:radial-gradient(circle, rgba(47,74,60,0.16), rgba(47,74,60,0) 72%);
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+  .hero .wrap{
+    display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(42px,5.2vw,68px); line-height:1.02; font-weight:600;
+    margin:16px 0 20px; max-width:480px;
+  }
+  .hero p{ font-size:16px; line-height:1.65; color:#5a5346; max-width:360px; margin-bottom:30px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .btn-sm{ padding:14px 30px; font-size:14px; }
+
+  .hero-visual{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:28px;
+    overflow:hidden;
+  }
+  .hero-visual img{ width:100%; height:100%; object-fit:contain; }
+  @media (max-width:860px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .hero h1{ max-width:none; }
+    .hero-visual{ aspect-ratio:4/3.4; margin-top:20px; }
+  }
+
+  /* ---------- Marquee strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:16px 0; background:var(--cream-deep);
+  }
+  .strip .wrap{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--sage-deep);
+    font-weight:600;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:96px 0; }
+  .section-head{ margin-bottom:52px; max-width:560px; }
+  .section-head h2{ font-size:clamp(30px,3.4vw,42px); font-weight:600; margin-top:12px; }
+  .section-head p{ color:#4a4438; margin-top:14px; line-height:1.6; }
+
+  /* ---------- Menu grid ---------- */
+  .sig-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .sig-card{
+    background:var(--cream-deep); border-radius:22px; padding:18px 18px 26px;
+    text-align:center;
+  }
+  .sig-card__img{
+    aspect-ratio:1/1; border-radius:16px; overflow:hidden; margin-bottom:18px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--white);
+  }
+  .sig-card__img img{ width:100%; height:100%; object-fit:contain; padding:10px; }
+  .sig-card__img.placeholder{
+    background:repeating-linear-gradient(135deg, rgba(35,31,26,0.05) 0 10px, rgba(35,31,26,0.02) 10px 20px);
+    color:#948b7d; font-size:12px; font-weight:500; padding:0 20px;
+  }
+  .sig-card h3{ font-size:18px; font-weight:600; margin-bottom:6px; }
+  .sig-card p{ font-size:13px; line-height:1.5; color:#6b6355; }
+  @media (max-width:860px){ .sig-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- Custom orders ---------- */
+  .custom{ background:var(--sage-deep); color:var(--cream); border-radius:28px; }
+  .custom .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:72px 28px; }
+  .custom .section-head p{ color:rgba(250,246,238,0.8); }
+  .custom .section-head .eyebrow{ color:var(--blush); }
+  .custom-list{ display:flex; flex-direction:column; gap:0; }
+  .custom-list li{ list-style:none; display:flex; justify-content:space-between; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(250,246,238,0.18); font-size:15px; }
+  .custom-list li span:last-child{ color:var(--blush); font-weight:600; font-size:13px; }
+  @media (max-width:860px){ .custom .wrap{ grid-template-columns:1fr; padding:52px 24px; } }
+
+  /* ---------- Gallery strip ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+  .gallery{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .gallery div{ aspect-ratio:1/1; border-radius:18px; overflow:hidden; background:var(--cream-deep); }
+  .gallery img{ width:100%; height:100%; object-fit:cover; }
+  @media (max-width:860px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- Location ---------- */
+  .location .wrap{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start; }
+  .info-row{ display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .info-row span:first-child{ color:#7a7264; }
+  .info-row span:last-child{ font-weight:600; text-align:right; }
+  .map{ border-radius:20px; overflow:hidden; border:1px solid var(--line); height:420px; }
+  .map iframe{ width:100%; height:100%; border:0; }
+  @media (max-width:860px){ .location .wrap{ grid-template-columns:1fr; } .map{ height:320px; } }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--charcoal); color:var(--cream); padding:64px 0 28px; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  footer .logo{ color:var(--cream); }
+  footer .foot-cta p{ color:rgba(250,246,238,0.65); max-width:320px; margin:14px 0 22px; font-size:14px; line-height:1.6;}
+  .foot-bottom{ border-top:1px solid rgba(250,246,238,0.14); margin-top:56px; padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12px; color:rgba(250,246,238,0.5); }
+
+  .social-row{ display:flex; gap:10px; margin-top:16px; }
+  .social-icon{
+    width:44px; height:44px; border-radius:13px;
+    background:rgba(250,246,238,0.06);
+    border:1px solid rgba(250,246,238,0.10);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream);
+    transition:transform .25s ease, background .25s ease, border-color .25s ease;
+  }
+  .social-icon svg{ width:18px; height:18px; }
+  .social-icon:hover{
+    transform:translateY(-3px);
+    background:rgba(250,246,238,0.14);
+    border-color:rgba(250,246,238,0.22);
+  }
+  .foot-bottom a{ color:rgba(250,246,238,0.7); }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img class="logo-img" src="images/Logo.png" alt="Mumy — say sweetness">
+    <nav>
+      <a href="#menu">Menú</a>
+      <a href="#personalizados">Personalizados</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+    <a class="btn btn-solid" href="https://wa.me/50248356549" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow reveal" style="transition-delay:.05s">Say sweetness</span>
+      <h1 class="reveal" style="transition-delay:.16s">Dulce, con textura, hecho a mano.</h1>
+      <p class="reveal" style="transition-delay:.28s">Galletas rellenas, alfajores y postres horneados en pequeños lotes. Ven a probarlos en Metroplaza o pídelos para tu próxima celebración.</p>
+      <div class="hero-actions reveal" style="transition-delay:.4s">
+        <a class="btn btn-solid btn-sm" href="#menu">Ver menú</a>
+        <a class="btn btn-outline btn-sm" href="#personalizados">Pedidos personalizados</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal" style="transition-delay:.2s">
+      <img id="heroImg" src="images/Hero.png" alt="Cookie artesanal Mumy">
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center; max-width:600px; margin-left:auto; margin-right:auto;">
+      <span class="eyebrow">Nuestro menú</span>
+      <h2>Los más pedidos</h2>
+    </div>
+    <div class="sig-grid reveal">
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/sig-honeyboos.png" alt="Honey Boo's Mumy"></div>
+        <h3>Honey Boo's</h3>
+        <p>Galleta de miel de maple y pecanas, con topping de maple y pecanas.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/sig-reesesbomb.png" alt="Reese's Bomb Mumy"></div>
+        <h3>Reese's Bomb</h3>
+        <p>Chocolate relleno de Reese's, dulce de leche y chocolate.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/sig-coco-alfajor.png" alt="Alfajor de coco Mumy"></div>
+        <h3>Alfajor de coco</h3>
+        <p>Relleno de dulce de leche, bañado en chocolate blanco y coco.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/sig-letters-stack.png" alt="Cookies con dip Mumy"></div>
+        <h3>Cookies & Dip</h3>
+        <p>Galletas de chispas de chocolate con dip de dulce de leche.</p>
+      </div>
+    </div>
+
+    <div class="section-head reveal" style="text-align:center; max-width:600px; margin:64px auto 0;">
+      <span class="eyebrow">Para acompañar</span>
+      <h2>Bebidas favoritas</h2>
+    </div>
+    <div class="sig-grid reveal">
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/drink-matcha.png" alt="Matcha frappé Mumy"></div>
+        <h3>Matcha Frappé</h3>
+        <p>Matcha helado, cremoso y ligero.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/drink-berry.png" alt="Berry smoothie Mumy"></div>
+        <h3>Berry Smoothie</h3>
+        <p>Mezcla de frutos rojos, fresca y natural.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/drink-choco.png" alt="Chocolate frío Mumy"></div>
+        <h3>Chocolate Frío</h3>
+        <p>Chocolate helado con crema y trozos de galleta.</p>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__img"><img src="images/drink-caramel.png" alt="Caramel cream Mumy"></div>
+        <h3>Caramel Cream</h3>
+        <p>Café helado con caramelo y crema batida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="personalizados">
+  <div class="wrap">
+    <div class="custom reveal">
+      <div class="wrap">
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="eyebrow">Pedidos personalizados</span>
+          <h2>Cookies con nombre y letras</h2>
+          <p>Galletas tipo letra para cumpleaños, baby showers y celebraciones. Cuéntanos el nombre y la fecha, nosotros nos encargamos del resto.</p>
+        </div>
+        <ul class="custom-list">
+          <li><span>Cookies con letras (por nombre)</span><span>Cotizar</span></li>
+          <li><span>Set de cumpleaños</span><span>Cotizar</span></li>
+          <li><span>Mesas de postres para eventos</span><span>Cotizar</span></li>
+          <li><span>Detalles corporativos</span><span>Cotizar</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="wrap about-grid">
+    <div class="reveal" style="border-radius:24px; overflow:hidden; aspect-ratio:4/5;">
+      <img src="images/equipo.jpg" alt="Equipo Mumy" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <div class="section-head reveal" style="margin-bottom:0;">
+      <span class="eyebrow">Nosotros</span>
+      <h2>Un equipo que hornea con cariño</h2>
+      <p>Somos un equipo pequeño horneando todos los días para que cada visita se sienta como estar en casa. Cada galleta, alfajor y pastel sale de nuestra cocina en Metroplaza.</p>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" style="padding-top:0;">
+  <div class="wrap">
+    <div class="gallery reveal">
+      <div><img src="images/foto2.jpg" alt="Decorando un pastel en Mumy"></div>
+      <div><img src="images/foto3.jpg" alt="Preparando alfajores en Mumy"></div>
+      <div><img src="images/foto1.jpg" alt="Compartiendo un postre Mumy"></div>
+      <div><img src="images/foto4.jpg" alt="Tote bag Mumy"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion">
+  <div class="wrap location">
+    <div class="wrap" style="padding:0;">
+      <div class="section-head reveal" style="margin-bottom:32px;">
+        <span class="eyebrow">Visítanos</span>
+        <h2>Metroplaza</h2>
+        <p>Un espacio pequeño y acogedor para tu café y postre de la tarde.</p>
+      </div>
+      <div class="reveal">
+        <div class="info-row"><span>Dirección</span><span>C.C. Metroplaza, Local — Guatemala</span></div>
+        <div class="info-row"><span>Lun – Vie</span><span>9:00 AM – 6:00 PM</span></div>
+        <div class="info-row"><span>Sábados</span><span>9:00 AM – 5:00 PM</span></div>
+        <div class="info-row"><span>Domingos</span><span>Cerrado</span></div>
+        <div class="info-row"><span>Pedidos</span><span>WhatsApp · Uber Eats</span></div>
+      </div>
+    </div>
+    <div class="map reveal">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15442.33924700778!2d-90.4907727!3d14.5658607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589a4ddc2393af9%3A0x4ce61a597ef7a28c!2sMetroplaza%20Carretera%20a%20El%20Salvador!5e0!3m2!1ses!2sgt!4v1700000000000!5m2!1ses!2sgt" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-cta">
+      <img class="logo-img" style="filter:brightness(0) invert(1);" src="images/Logo.png" alt="Mumy">
+      <p style="font-style:italic; margin-top:10px;">Because some words deserve dulce de leche.</p>
+      <p>Cookies, postres y café hechos a mano en Metroplaza. Escríbenos y armamos tu pedido.</p>
+      <a class="btn btn-solid" href="https://wa.me/50248356549" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+    <div>
+      <span class="eyebrow" style="color:rgba(250,246,238,0.5);">Síguenos</span>
+      <div class="social-row">
+        <a class="social-icon" href="https://www.instagram.com/mumy.gt/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="social-icon" href="https://www.facebook.com/p/Mumygt-100046588764415/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M13.5 21.9v-8.2h2.75l.41-3.2h-3.16V8.45c0-.93.26-1.56 1.59-1.56h1.7V3.98C15.98 3.87 15.13 3.8 14.13 3.8c-2.55 0-4.3 1.56-4.3 4.42v2.28H7.06v3.2h2.77v8.2h3.67Z"/></svg>
+        </a>
+        <a class="social-icon" href="https://www.tiktok.com/@mumy.gt" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M16.5 2h-3.1v13.1a2.6 2.6 0 1 1-2.6-2.6c.2 0 .4 0 .6.06V9.5a5.7 5.7 0 1 0 5.1 5.67V8.3a7.6 7.6 0 0 0 4.4 1.4V6.6a4.5 4.5 0 0 1-4.4-4.6Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Mumy. Todos los derechos reservados.</span>
+    <span>Creado por <a href="#">Vetric Group</a></span>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el=>io.observe(el));
+
+  const heroImg = document.getElementById('heroImg');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(heroImg && !reduceMotion){
+    let ticking = false;
+    window.addEventListener('scroll', ()=>{
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const y = window.scrollY;
+          heroImg.style.transform = `translateY(-${Math.min(y*0.08,70)}px) scale(1.08)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive:true });
+  }
+</script>
+
+</body>
+</html>
