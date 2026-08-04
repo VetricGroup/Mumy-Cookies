@@ -174,12 +174,18 @@
   @keyframes fadeScale{ from{ opacity:0; transform:scale(.96); } to{ opacity:1; transform:scale(1); } }
   .hero-bleed img{ width:100%; height:100%; object-fit:cover; object-position:right center; will-change:transform; }
   @media (max-width:860px){
-    .hero-content{ max-width:none; }
-    .hero-bleed{
-      position:relative; width:calc(100% + 56px); margin:20px -28px 0; height:auto; aspect-ratio:4/3.2;
-      border-radius:24px;
-    }
-    .hero-bleed img{ object-position:center; }
+    .hero{ padding:36px 0 54px; }
+    .hero-content{ max-width:56%; }
+    .hero h1{ font-size:clamp(26px,7.4vw,40px); margin:12px 0 14px; }
+    .hero p{ font-size:13px; line-height:1.5; max-width:none; margin-bottom:22px; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .hero-actions .btn{ width:100%; text-align:center; }
+    .btn-sm{ padding:12px 20px; font-size:12.5px; }
+    .hero-bleed{ width:42%; }
+  }
+  @media (max-width:480px){
+    .hero-content{ max-width:54%; }
+    .hero h1{ font-size:clamp(22px,7.8vw,32px); }
   }
   @media (prefers-reduced-motion: reduce){
     .word-reveal span, .hero p, .hero-actions, .hero-bleed{ animation:none !important; opacity:1 !important; transform:none !important; }
@@ -220,13 +226,11 @@
   .reel-progress span{ width:26px; height:3px; border-radius:2px; background:var(--line); transition:background .2s ease; }
   .reel-progress span.is-active{ background:var(--sage-deep); }
   @media (max-width:860px){
-    .reel-pin{ height:auto; }
-    .reel-sticky{ position:static; height:auto; display:block; }
-    .reel-track{ display:flex; flex-direction:column; transform:none !important; }
-    .reel-item{ flex-direction:column; height:auto; padding:36px 0; gap:24px; text-align:center; }
-    .reel-item__img{ width:70vw; margin:0 auto; }
-    .reel-item__text{ margin:0 auto; }
-    .reel-progress{ display:none; }
+    .reel-item{ flex-direction:column; gap:20px; padding:0 32px; text-align:center; }
+    .reel-item__img{ width:58vw; max-width:280px; }
+    .reel-item__text{ max-width:320px; margin:0 auto; }
+    .reel-item__text h3{ margin:6px 0 10px; }
+    .reel-progress{ bottom:26px; }
   }
 
   /* ---------- Bebidas grid ---------- */
@@ -408,7 +412,7 @@
   <h4>Este sitio usa cookies (¡las de verdad son más ricas!)</h4>
   <p>Para asegurarnos de que tengas la mejor experiencia en nuestro sitio.</p>
   <div class="cookie-actions">
-    <button class="btn btn-solid" id="cookieAccept" type="button"> Aceptar cookies</button>
+    <button class="btn btn-solid" id="cookieAccept" type="button">🍪 Aceptar cookies</button>
     <button class="btn btn-outline" id="cookieMoreBtn" type="button">Ver más</button>
   </div>
   <div class="cookie-more" id="cookieMore">
@@ -760,10 +764,8 @@
   });
   const reelDots = Array.from(reelProgressWrap.children);
 
-  function isMobile(){ return window.innerWidth <= 860; }
-
   function updateReel(){
-    if(!reelPin || isMobile() || reduceMotion) return;
+    if(!reelPin || reduceMotion) return;
     const rect = reelPin.getBoundingClientRect();
     const total = reelPin.offsetHeight - window.innerHeight;
     const progress = Math.min(Math.max(-rect.top / total, 0), 1);
