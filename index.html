@@ -175,16 +175,17 @@
   .hero-bleed img{ width:100%; height:100%; object-fit:cover; object-position:right center; will-change:transform; }
   @media (max-width:860px){
     .hero{ padding:36px 0 54px; }
-    .hero-content{ max-width:56%; }
+    .hero-content{ max-width:50%; }
     .hero h1{ font-size:clamp(26px,7.4vw,40px); margin:12px 0 14px; }
     .hero p{ font-size:13px; line-height:1.5; max-width:none; margin-bottom:22px; }
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:10px; }
     .hero-actions .btn{ width:100%; text-align:center; }
     .btn-sm{ padding:12px 20px; font-size:12.5px; }
-    .hero-bleed{ width:42%; }
+    .hero-bleed{ width:46%; }
+    .hero-bleed img{ object-position:38% center; }
   }
   @media (max-width:480px){
-    .hero-content{ max-width:54%; }
+    .hero-content{ max-width:48%; }
     .hero h1{ font-size:clamp(22px,7.8vw,32px); }
   }
   @media (prefers-reduced-motion: reduce){
@@ -226,11 +227,22 @@
   .reel-progress span{ width:26px; height:3px; border-radius:2px; background:var(--line); transition:background .2s ease; }
   .reel-progress span.is-active{ background:var(--sage-deep); }
   @media (max-width:860px){
-    .reel-item{ flex-direction:column; gap:20px; padding:0 32px; text-align:center; }
+    .reel-pin{ height:auto; margin-top:20px; }
+    .reel-sticky{ position:static; height:auto; overflow:visible; display:block; }
+    .reel-track{
+      display:flex; transform:none !important;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      scrollbar-width:none; padding-bottom:4px;
+    }
+    .reel-track::-webkit-scrollbar{ display:none; }
+    .reel-item{
+      scroll-snap-align:center; flex:0 0 100vw; height:auto;
+      flex-direction:column; gap:20px; padding:24px 32px 8px; text-align:center;
+    }
     .reel-item__img{ width:58vw; max-width:280px; }
     .reel-item__text{ max-width:320px; margin:0 auto; }
     .reel-item__text h3{ margin:6px 0 10px; }
-    .reel-progress{ bottom:26px; }
+    .reel-progress{ position:static; transform:none; margin-top:18px; justify-content:center; }
   }
 
   /* ---------- Bebidas grid ---------- */
@@ -764,8 +776,10 @@
   });
   const reelDots = Array.from(reelProgressWrap.children);
 
+  function isMobile(){ return window.innerWidth <= 860; }
+
   function updateReel(){
-    if(!reelPin || reduceMotion) return;
+    if(!reelPin || isMobile() || reduceMotion) return;
     const rect = reelPin.getBoundingClientRect();
     const total = reelPin.offsetHeight - window.innerHeight;
     const progress = Math.min(Math.max(-rect.top / total, 0), 1);
@@ -786,6 +800,22 @@
   window.addEventListener('scroll', onScrollAll, { passive:true });
   window.addEventListener('resize', updateReel);
   window.addEventListener('load', ()=>{ updateProgress(); updateReel(); });
+
+  /* En móvil el reel usa swipe horizontal nativo: sincronizamos los puntos con el scroll del track */
+  if(reelTrack){
+    let reelSwipeTicking = false;
+    reelTrack.addEventListener('scroll', ()=>{
+      if(!isMobile()) return;
+      if(!reelSwipeTicking){
+        window.requestAnimationFrame(()=>{
+          const idx = Math.round(reelTrack.scrollLeft / Math.max(window.innerWidth,1));
+          reelDots.forEach((d,i)=> d.classList.toggle('is-active', i === idx));
+          reelSwipeTicking = false;
+        });
+        reelSwipeTicking = true;
+      }
+    }, { passive:true });
+  }
 
   /* Cookie banner */
   const cookieBanner = document.getElementById('cookieBanner');
