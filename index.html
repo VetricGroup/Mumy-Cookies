@@ -174,19 +174,24 @@
   @keyframes fadeScale{ from{ opacity:0; transform:scale(.96); } to{ opacity:1; transform:scale(1); } }
   .hero-bleed img{ width:100%; height:100%; object-fit:cover; object-position:right center; will-change:transform; }
   @media (max-width:860px){
-    .hero{ padding:36px 0 54px; }
-    .hero-content{ max-width:50%; }
-    .hero h1{ font-size:clamp(26px,7.4vw,40px); margin:12px 0 14px; }
-    .hero p{ font-size:13px; line-height:1.5; max-width:none; margin-bottom:22px; }
-    .hero-actions{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .hero{ padding:0 0 44px; }
+    .hero-content{ max-width:100%; padding-top:26px; }
+    .hero h1{ font-size:clamp(28px,8vw,40px); margin:12px 0 14px; }
+    .hero p{ font-size:14px; line-height:1.55; max-width:none; margin-bottom:22px; }
+    .hero-actions{ flex-direction:column; align-items:stretch; gap:10px; }
     .hero-actions .btn{ width:100%; text-align:center; }
-    .btn-sm{ padding:12px 20px; font-size:12.5px; }
-    .hero-bleed{ width:50%; right:-6%; }
-    .hero-bleed img{ object-fit:contain; object-position:center top; }
+    .btn-sm{ padding:13px 20px; font-size:13px; }
+    /* La imagen pasa de "flotar al 50% detrás del texto" a ocupar todo el ancho arriba, apilada */
+    .hero-bleed{
+      position:static; width:100%; height:62vw; max-height:340px;
+      right:auto; top:auto; border-radius:0 0 28px 28px;
+    }
+    .hero-bleed img{ object-fit:cover; object-position:center 30%; }
   }
   @media (max-width:480px){
-    .hero-content{ max-width:48%; }
-    .hero h1{ font-size:clamp(22px,7.8vw,32px); }
+    .hero-content{ max-width:100%; }
+    .hero h1{ font-size:clamp(24px,8.4vw,32px); }
+    .hero-bleed{ height:68vw; }
   }
   @media (prefers-reduced-motion: reduce){
     .word-reveal span, .hero p, .hero-actions, .hero-bleed{ animation:none !important; opacity:1 !important; transform:none !important; }
@@ -745,10 +750,10 @@
 
   /* Hero parallax on scroll */
   const heroImg = document.getElementById('heroImg');
-  if(heroImg && !reduceMotion){
+  if(heroImg && !reduceMotion && !isMobile()){
     let ticking = false;
     window.addEventListener('scroll', ()=>{
-      if(!ticking){
+      if(!ticking || isMobile()){
         window.requestAnimationFrame(()=>{
           const y = window.scrollY;
           heroImg.style.transform = `translateY(-${Math.min(y*0.08,70)}px) scale(1.06)`;
