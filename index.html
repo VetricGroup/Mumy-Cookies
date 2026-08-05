@@ -197,6 +197,59 @@
     .word-reveal span, .hero p, .hero-actions, .hero-bleed{ animation:none !important; opacity:1 !important; transform:none !important; }
   }
 
+  /* ---------- Hero móvil: carrusel de tienda ---------- */
+  .hero-mobile{ display:none; }
+  @media (max-width:860px){
+    .hero{ padding:0; }
+    .hero-bleed, .hero > .wrap{ display:none; }
+
+    .hero-mobile{
+      display:block; position:relative; overflow:hidden;
+      height:88vh; max-height:640px; min-height:480px;
+      border-radius:0 0 30px 30px;
+    }
+    .hm-slides{
+      display:flex; height:100%; width:100%;
+      transition:transform .6s cubic-bezier(.4,0,.2,1);
+      touch-action:pan-y;
+    }
+    .hm-slide{ flex:0 0 100%; height:100%; }
+    .hm-slide img{ width:100%; height:100%; object-fit:cover; }
+    .hm-fade{
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:linear-gradient(180deg, rgba(27,51,39,0) 32%, rgba(20,28,20,0.5) 66%, rgba(13,18,13,0.88) 100%);
+    }
+    .hm-content{
+      position:absolute; left:0; right:0; bottom:56px; z-index:2; padding:0 24px;
+    }
+    .hm-content .eyebrow{ color:var(--blush); }
+    .hm-content h1{
+      color:var(--cream); font-family:'Fraunces',serif; letter-spacing:-0.01em;
+      font-size:clamp(26px,7.6vw,34px); line-height:1.1; font-weight:600; margin:10px 0 12px;
+    }
+    .hm-content p{
+      font-size:14px; line-height:1.55; color:rgba(250,246,238,0.86); max-width:300px; margin-bottom:22px;
+    }
+    .hm-btn{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--blush); color:var(--charcoal);
+    }
+    .hm-btn:hover{ background:var(--blush-deep); }
+    .hm-btn svg{ width:16px; height:16px; flex-shrink:0; }
+    .hm-dots{
+      position:absolute; bottom:22px; left:0; right:0; z-index:2;
+      display:flex; justify-content:center; gap:6px;
+    }
+    .hm-dot{
+      width:6px; height:6px; border-radius:50%; background:rgba(250,246,238,0.42);
+      transition:width .3s ease, background .3s ease; cursor:pointer;
+    }
+    .hm-dot.active{ width:18px; border-radius:3px; background:var(--cream); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hm-slides{ transition:none !important; }
+  }
+
   /* ---------- Section shell ---------- */
   section{ padding:110px 0; }
   .section-head{ margin-bottom:52px; max-width:560px; }
@@ -520,6 +573,26 @@
       </div>
     </div>
   </div>
+
+  <!-- Hero exclusivo para móvil: carrusel de fotos de la tienda -->
+  <div class="hero-mobile" id="heroMobile">
+    <div class="hm-slides" id="hmSlides">
+      <div class="hm-slide"><img src="images/tienda-1.jpg" alt="Fachada de la tienda Mumy en Metroplaza" loading="eager"></div>
+      <div class="hm-slide"><img src="images/tienda-2.jpg" alt="Bebida artesanal Mumy en tienda" loading="lazy"></div>
+      <div class="hm-slide"><img src="images/tienda-3.jpg" alt="Vitrina de postres y alfajores Mumy" loading="lazy"></div>
+    </div>
+    <div class="hm-fade"></div>
+    <div class="hm-content">
+      <span class="eyebrow">Visítanos</span>
+      <h1>Nuestra tienda<br>en Metroplaza</h1>
+      <p>Un espacio creado para disfrutar de postres hechos a mano con ingredientes de calidad.</p>
+      <a class="btn btn-solid hm-btn" href="#ubicacion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+    <div class="hm-dots" id="hmDots"></div>
+  </div>
 </section>
 
 <!-- Signature: horizontal scroll reel -->
@@ -787,6 +860,60 @@
   const reelDots = Array.from(reelProgressWrap.children);
 
   function isMobile(){ return window.innerWidth <= 860; }
+
+  /* Hero móvil: carrusel de fotos de la tienda */
+  (function(){
+    const track = document.getElementById('hmSlides');
+    const dotsWrap = document.getElementById('hmDots');
+    if(!track || !dotsWrap) return;
+    const slides = track.querySelectorAll('.hm-slide');
+    let current = 0;
+    let autoplayTimer = null;
+
+    slides.forEach((_, i)=>{
+      const dot = document.createElement('span');
+      dot.className = 'hm-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', ()=> goTo(i, true));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = dotsWrap.querySelectorAll('.hm-dot');
+
+    function goTo(i, userAction){
+      current = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, idx)=> d.classList.toggle('active', idx === current));
+      if(userAction) restartAutoplay();
+    }
+    function next(){ goTo(current + 1); }
+    function startAutoplay(){
+      if(reduceMotion || slides.length < 2) return;
+      autoplayTimer = setInterval(next, 4500);
+    }
+    function restartAutoplay(){
+      clearInterval(autoplayTimer);
+      startAutoplay();
+    }
+    startAutoplay();
+
+    /* Swipe táctil */
+    let startX = 0, deltaX = 0, dragging = false;
+    track.addEventListener('touchstart', (e)=>{
+      dragging = true; startX = e.touches[0].clientX; deltaX = 0;
+      clearInterval(autoplayTimer);
+    }, { passive:true });
+    track.addEventListener('touchmove', (e)=>{
+      if(!dragging) return;
+      deltaX = e.touches[0].clientX - startX;
+    }, { passive:true });
+    track.addEventListener('touchend', ()=>{
+      if(!dragging) return;
+      dragging = false;
+      if(Math.abs(deltaX) > 40){
+        goTo(current + (deltaX < 0 ? 1 : -1));
+      }
+      restartAutoplay();
+    });
+  })();
 
   function updateReel(){
     if(!reelPin || isMobile() || reduceMotion) return;
