@@ -1,0 +1,29 @@
+[
+  {
+    "id": "caja-galletas",
+    "categoria": "Cookies",
+    "nombre": "Signature Cookie Box",
+    "precio": 120.00,
+    "imagen": "images/menu/caja-galletas.jpg",
+    "descripcion": "Nuestra caja signature con un surtido artesanal de nuestras galletas más queridas: Choc Chip, Double Choc y Red Velvet recién horneadas.",
+    "badge": "BEST SELLER"
+  },
+  {
+    "id": "tubo-cookies",
+    "categoria": "Cookies",
+    "nombre": "Tubo de Cookies Especiales",
+    "precio": 85.00,
+    "imagen": "images/menu/tubo-cookies.jpg",
+    "descripcion": "Torre artesanal de galletas especiales bañadas con glaseado y crocante de nuez. Empaque especial de regalo.",
+    "badge": "MÁS PEDIDO"
+  },
+  {
+    "id": "alfajores-tradicionales",
+    "categoria": "Alfajores",
+    "nombre": "Alfajores de Dulce de Leche",
+    "precio": 45.00,
+    "imagen": "images/menu/alfajores.jpg",
+    "descripcion": "Suaves tapas de alfajor tradicional rellenas con abundante dulce de leche artesanal y bordes decorados con coco rallado.",
+    "badge": "CLÁSICO"
+  }
+]

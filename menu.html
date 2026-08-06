@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú — Mumy · Metroplaza</title>
+<link rel="icon" type="image/png" href="images/Logo.png">
+<link rel="apple-touch-icon" href="images/Logo.png">
+<meta name="description" content="Descubre nuestro menú completo de galletas, alfajores, postres y bebidas artesanales. Pide por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #FFFFFF;
+    --bg-card: #F5EEF0;
+    --text-primary: #121212;
+    --text-muted: #666666;
+    --border-color: #E8E8E8;
+    --sage-deep: #1B3327;
+    --pink-soft: #F9EBEA;
+    --badge-bg: #4A2E2B;
+    --font-main: 'Inter', sans-serif;
+    --font-serif: 'Fraunces', serif;
+    --max-width: 1400px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- HEADER ESTILO BROOKI ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand-logo {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-logo img { height: 40px; width: auto; }
+  
+  nav.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  nav.main-nav a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s ease;
+  }
+  nav.main-nav a:hover, nav.main-nav a.is-active {
+    color: #000000;
+    font-weight: 600;
+  }
+  .nav-arrow { font-size: 10px; opacity: 0.7; }
+
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .icon-btn svg { width: 22px; height: 22px; stroke-width: 1.6; }
+
+  /* Mobile menu burger button */
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  @media (max-width: 900px) {
+    nav.main-nav { display: none; }
+    .mobile-toggle { display: block; }
+  }
+
+  /* ---------- LAYOUT PRINCIPAL (SIDEBAR + CONTENT) ---------- */
+  .page-layout {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 32px 100px;
+    display: flex;
+    gap: 48px;
+  }
+
+  /* ---------- SIDEBAR DE FILTROS ---------- */
+  aside.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+  }
+  .filter-group {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+  .filter-header span.toggle-icon {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .filter-options { display: flex; flex-direction: column; gap: 12px; }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+  }
+  .checkbox-label input[type="checkbox"], .checkbox-label input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--text-primary);
+    cursor: pointer;
+  }
+  .count-muted { color: var(--text-muted); font-size: 13px; margin-left: 2px; }
+
+  /* Price Range Slider */
+  .price-slider-wrap { margin-top: 10px; }
+  .range-track {
+    width: 100%;
+    height: 4px;
+    background: #121212;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .price-field {
+    flex: 1;
+    background: #F6F6F6;
+    border: 1px solid #E0E0E0;
+    border-radius: 20px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .price-field input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    outline: none;
+    color: var(--text-primary);
+  }
+
+  /* Floating sign up card inside sidebar bottom */
+  .signup-box {
+    margin-top: 40px;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+  }
+  .signup-box p { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .signup-close {
+    position: absolute; top: 12px; right: 12px;
+    background: none; border: none; font-size: 14px; cursor: pointer; color: var(--text-muted);
+  }
+
+  /* ---------- MAIN CONTENT AREA ---------- */
+  main.main-content {
+    flex: 1;
+  }
+
+  .content-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .product-count {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .sort-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+  .sort-select {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    padding-right: 4px;
+  }
+
+  /* ---------- PRODUCT GRID (3 COLUMNAS) ---------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 24px;
+  }
+  
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .product-card .img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background-color: var(--bg-card);
+    overflow: hidden;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-card .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover .img-container img {
+    transform: scale(1.03);
+  }
+  
+  /* Starburst / Best Seller Badge */
+  .badge-bestseller {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--badge-bg);
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 50px;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .product-info h3 {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+  .product-info .price {
+    font-size: 14px;
+    font-weight: 400;
+    color: #555555;
+  }
+
+  /* Responsive Grid */
+  @media (max-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .page-layout { flex-direction: column; padding: 20px 16px; }
+    aside.sidebar { width: 100%; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; }
+  }
+
+  /* ---------- FLOATING NEED HELP WIDGET ---------- */
+  .floating-help {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .help-pill {
+    background: #EFE8E6;
+    border: 1px solid var(--border-color);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    cursor: pointer;
+  }
+  .help-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #EFE8E6;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  /* ---------- PRODUCT DETAIL MODAL ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 120;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+  .modal-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    max-width: 760px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  .modal-img { aspect-ratio: 1/1; background: var(--bg-card); }
+  .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-body { padding: 36px 28px; display: flex; flex-direction: column; }
+  .modal-close {
+    position: absolute; top: 14px; right: 14px;
+    width: 32px; height: 32px; border-radius: 50%;
+    border: none; background: #F0F0F0; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-cat { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.08em; }
+  .modal-title { font-size: 24px; font-weight: 600; margin: 6px 0 10px; }
+  .modal-price { font-size: 18px; font-weight: 600; color: var(--sage-deep); margin-bottom: 14px; }
+  .modal-desc { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 24px; }
+  .btn-whatsapp {
+    margin-top: auto;
+    background: #25D366;
+    color: #FFFFFF;
+    padding: 14px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  @media (max-width: 640px) {
+    .modal-card { grid-template-columns: 1fr; }
+    .modal-img { aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER PRINCIPAL -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="images/Logo.png" alt="Mumy Logo" onerror="this.style.display='none'">
+      <span>Mumy®</span>
+    </a>
+    
+    <nav class="main-nav">
+      <a href="menu.html" class="is-active">Delivery <span class="nav-arrow">∨</span></a>
+      <a href="index.html#personalizados">Pick Up <span class="nav-arrow">∨</span></a>
+      <a href="index.html#personalizados">Personalizados</a>
+      <a href="index.html#nosotros">Nosotros</a>
+      <a href="index.html#ubicacion">Ubicación</a>
+    </nav>
+
+    <div class="header-icons">
+      <button class="icon-btn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Cuenta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+      <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Menú móvil">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ESTRUCTURA PRINCIPAL DE LA PÁGINA -->
+<div class="page-layout">
+  
+  <!-- BARRA LATERAL DE FILTROS -->
+  <aside class="sidebar">
+    
+    <!-- Filtro 1: Availability -->
+    <div class="filter-group">
+      <div class="filter-header">
+        <span>Availability</span>
+        <span class="toggle-icon">−</span>
+      </div>
+      <div class="filter-options">
+        <label class="checkbox-label">
+          <input type="checkbox" id="stockIn" checked>
+          <span>In stock <span class="count-muted" id="countInStock">(0)</span></span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="stockOut">
+          <span>Out of stock <span class="count-muted" id="countOutStock">(0)</span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Filtro 2: Categorías -->
+    <div class="filter-group">
+      <div class="filter-header">
+        <span>Categorías</span>
+        <span class="toggle-icon">−</span>
+      </div>
+      <div class="filter-options" id="categoryFilterContainer">
+        <!-- Opciones generadas por JS dinámicamente -->
+      </div>
+    </div>
+
+    <!-- Filtro 3: Price -->
+    <div class="filter-group">
+      <div class="filter-header">
+        <span>Price</span>
+        <span class="toggle-icon">−</span>
+      </div>
+      <div class="price-slider-wrap">
+        <div class="range-track"></div>
+        <div class="price-inputs">
+          <div class="price-field">
+            <span>Q</span>
+            <input type="number" id="priceMin" value="0" placeholder="0">
+          </div>
+          <span>To</span>
+          <div class="price-field">
+            <span>Q</span>
+            <input type="number" id="priceMax" value="500" placeholder="500">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Widget Sign-up Inferior estilo Brooki -->
+    <div class="signup-box" id="signupWidget">
+      <button class="signup-close" onclick="document.getElementById('signupWidget').style.display='none'">✕</button>
+      <p>SIGN UP!</p>
+    </div>
+
+  </aside>
+
+  <!-- CONTENIDO DE PRODUCTOS -->
+  <main class="main-content">
+    
+    <!-- Toolbar superior: Contador y Ordenador -->
+    <div class="content-toolbar">
+      <span class="product-count" id="productCountHeader">0 productos</span>
+      
+      <div class="sort-dropdown">
+        <span>Sort by:</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="featured">Featured</option>
+          <option value="price-low">Precio: Menor a Mayor</option>
+          <option value="price-high">Precio: Mayor a Menor</option>
+          <option value="name-az">Nombre: A - Z</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Grid de Productos -->
+    <div class="product-grid" id="menuGrid">
+      <!-- Tarjetas cargadas dinámicamente por JS desde productos.json -->
+    </div>
+
+  </main>
+</div>
+
+<!-- WIDGET FLOTANTE INFERIOR DERECHO -->
+<div class="floating-help" id="floatingHelp">
+  <div class="help-pill" onclick="window.open('https://wa.me/50248356549', '_blank')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span>Need more help?</span>
+  </div>
+  <button class="help-close" onclick="document.getElementById('floatingHelp').style.display='none'">✕</button>
+</div>
+
+<!-- MODAL DETALLE DE PRODUCTO -->
+<div class="modal-overlay" id="productoDetalle" role="dialog">
+  <div class="modal-card">
+    <button class="modal-close" id="detalleCerrar">&times;</button>
+    <div class="modal-img">
+      <img id="detalleImagen" src="" alt="Producto">
+    </div>
+    <div class="modal-body">
+      <span class="modal-cat" id="detalleCategoria">Categoría</span>
+      <h2 class="modal-title" id="detalleNombre">Nombre</h2>
+      <p class="modal-price" id="detallePrecio">Q 0.00</p>
+      <p class="modal-desc" id="detalleDescripcion">Descripción...</p>
+      <a class="btn-whatsapp" id="detalleWhatsapp" href="#" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.8 14.2c-.3.7-1.5 1.4-2.1 1.5-.5.1-1.2.2-3.8-.8-3.2-1.3-5.3-4.5-5.5-4.7-.2-.2-1.3-1.7-1.3-3.3 0-1.6.8-2.3 1.1-2.7.3-.3.7-.4.9-.4h.6c.2 0 .5 0 .7.6.3.7.9 2.3 1 2.5.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.5-.6.6-.2.2-.4.4-.2.8.2.4 1 1.6 2.1 2.6 1.4 1.3 2.6 1.7 3 1.9.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.2.1.9-.2 1.6Z"/></svg>
+        Pedir por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/menu.js"></script>
+</body>
+</html>
